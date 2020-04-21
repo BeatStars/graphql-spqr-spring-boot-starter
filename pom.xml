@@ -24,12 +24,20 @@
         <url>https://github.com/leangen/graphql-spqr-spring-boot-starter</url>
         <tag>HEAD</tag>
     </scm>
+
     <distributionManagement>
         <repository>
             <id>bintray-leangen</id>
             <url>https://api.bintray.com/maven/leangen/maven/graphql-spqr-spring-boot-starter/</url>
         </repository>
+        
+        <snapshotRepository>
+            <id>github</id>
+            <name>GitHub tommy4st Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/tommy4st/graphql-spqr-spring-boot-starter</url>
+        </snapshotRepository>
     </distributionManagement>
+
     <issueManagement>
         <system>GitHub Issue Tracking</system>
         <url>https://github.com/leangen/graphql-spqr-spring-boot-starter/issues</url>
