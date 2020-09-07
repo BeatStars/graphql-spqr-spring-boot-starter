@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, include = JsonTypeInfo.As.EXISTING_PROPERTY)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = InitMessage.class, name = ApolloMessage.GQL_CONNECTION_INIT),
-        @JsonSubTypes.Type(value = ApolloMessage.class, name = ApolloMessage.GQL_CONNECTION_TERMINATE),
-        @JsonSubTypes.Type(value = ApolloMessage.class, name = ApolloMessage.GQL_STOP),
-        @JsonSubTypes.Type(value = StartMessage.class, name = ApolloMessage.GQL_START),
-        @JsonSubTypes.Type(value = ConnectionErrorMessage.class, name = ApolloMessage.GQL_CONNECTION_ERROR),
-        @JsonSubTypes.Type(value = ErrorMessage.class, name = ApolloMessage.GQL_ERROR),
+    @JsonSubTypes.Type(value = InitMessage.class, name = ApolloMessage.GQL_CONNECTION_INIT),
+    @JsonSubTypes.Type(value = ApolloMessage.class, name = ApolloMessage.GQL_CONNECTION_TERMINATE),
+    @JsonSubTypes.Type(value = ApolloMessage.class, name = ApolloMessage.GQL_STOP),
+    @JsonSubTypes.Type(value = StartMessage.class, name = ApolloMessage.GQL_START),
+    @JsonSubTypes.Type(value = ConnectionErrorMessage.class, name = ApolloMessage.GQL_CONNECTION_ERROR),
+    @JsonSubTypes.Type(value = ErrorMessage.class, name = ApolloMessage.GQL_ERROR),
 })
 @SuppressWarnings("WeakerAccess")
 public class ApolloMessage {
@@ -51,7 +51,7 @@ public class ApolloMessage {
     private static final ApolloMessage CONNECTION_ACK = new ApolloMessage(GQL_CONNECTION_ACK);
     private static final ApolloMessage KEEP_ALIVE = new ApolloMessage(GQL_CONNECTION_KEEP_ALIVE);
 
-    private static final ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private ApolloMessage(String type) {
         this(null, type);
@@ -101,9 +101,9 @@ public class ApolloMessage {
 
     public static TextMessage error(String id, List<GraphQLError> errors) throws JsonProcessingException {
         return jsonMessage(new ErrorMessage(id, errors.stream()
-                .filter(error -> !error.getErrorType().equals(ErrorType.DataFetchingException))
-                .map(GraphQLError::toSpecification)
-                .collect(Collectors.toList())));
+            .filter(error -> !error.getErrorType().equals(ErrorType.DataFetchingException))
+            .map(GraphQLError::toSpecification)
+            .collect(Collectors.toList())));
     }
 
     public static TextMessage error(String id, Throwable exception) throws JsonProcessingException {
